@@ -1,8 +1,10 @@
-from webapp import app
-from flask import render_template, request
-from webapp.util import *
+#!/usr/bin/env python
+
+from flask import Flask,render_template, request
+from util import *
 
 
+app = Flask(__name__)
 
 #@app.template_filter('nl2br')
 #def nl2br(s):
@@ -27,3 +29,7 @@ def calculate():
    return render_template('calculate.html.j2',
                           nutrients=nutList,
                           clusters=nClust)
+   
+if __name__ == '__main__':
+    app.run(debug=True)
+
