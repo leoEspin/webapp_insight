@@ -1,0 +1,12 @@
+{% extends "layout.html.j2" %}
+
+{% block title %} Classification results {% endblock %}
+
+{% block body %}
+
+<h1>Found <span class="text-success">{{clusters}}</span> close clusters:</h1>
+
+<p>{{string}}</p>
+
+{% include './nfactsTable.html' %}
+{% endblock %}
