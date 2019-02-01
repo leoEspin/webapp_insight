@@ -23,7 +23,7 @@ def parsero(string,scale=True):
           'food:cholesterolPer100g','food:transFatPer100g',
           'food:saturatedFatPer100g','food:sodiumEquivalentPer100g']
     tmp=string.split(',')
-    tmp=list(map(str.strip,tmp))
+    #tmp=list(map(str.strip,tmp))
     df=pd.DataFrame(columns=[ _[5:] for _ in keys])
     title=[]
     for i,cbar in enumerate(tmp):
