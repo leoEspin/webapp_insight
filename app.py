@@ -18,18 +18,21 @@ def index():
 @app.route('/calculate', methods=['GET'])
 def calculate():
    if request.method == 'GET':
-      code=request.args.get('statement1')
-      nutritionVect=parsero(code,True)#rescaled for 100g and distance computations
-      contents=parsero(code,False) #rescaled for 100g
+      codes=request.args.get('statement1')
+      nutritionVect=parsero(codes,True)[0]#rescaled for distance computations
+      contents,title=parsero(codes,False) #rescaled for 100g/html table
       #distances from centroids
-      distances=np.apply_along_axis(distance, 1, centroids,nutritionVect) 
+      distances=np.zeros((len(contents),len(centroids)))
+      for i in range(len(contents)):
+          distances[i,:]=np.apply_along_axis(distance, 1,
+                    centroids,nutritionVect.iloc[i].values)
       neighbors,nClust=classifierInt(distances)
       nutList=nutritionList(contents) #nutrition strings for html table
       decorations(nutList,cluster2table(neighbors))#color warning decorations
    return render_template('calculate.html.j2',
                           nutrients=nutList,
-                          clusters=nClust)
+                          clusters=nClust,names=title)
    
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=False)
-
+    #app.run(debug=True)

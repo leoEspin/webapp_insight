@@ -4,9 +4,24 @@
 
 {% block body %}
 
-<h1>Found <span class="text-success">{{clusters}}</span> close clusters:</h1>
-
-<p>{{string}}</p>
-
-{% include './nfactsTable.html' %}
+<table style="width:100%">
+  <tr>
+    <th align="center">Product</th>
+    {% for i in names %}
+        <th align="right"><h5>{{i}}</h5></th>
+    {% endfor %}
+  </tr>
+  <tr>
+    <td> Scaled </br>table</td>
+    {% for index, row in nutrients.iterrows() %}
+        <td>{% include './nfactsTable.html' %}</td>
+    {% endfor %}
+  </tr>
+  <tr>
+    <td> Clustering info</td>
+    {% for i in clusters %}
+        <td><h5>Found <span class="text-success">{{i}}</span> close clusters</h5></td>
+    {% endfor %}
+  </tr>
+</table>
 {% endblock %}
