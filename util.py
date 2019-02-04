@@ -31,8 +31,11 @@ def parsero(string,scale=True):
         page = requests.get(furl, headers=headers)
         soup=BeautifulSoup(page.content, 'html.parser')
         title.append(soup.title.string.split('-')[0].strip())
-        if (title[-1] == 'Add a product') or (title[-1] == 'Error'):
-            title.append('Product not foud')
+        if ((title[-1] == 'Add a product') or 
+            (title[-1] == 'Search results') or
+            (title[-1] == 'Error')):
+            del title[-1]
+            title.append('<font color="red">Product not foud</font>')
         test=soup.find_all('td', class_="nutriment_value")  
         table={}
         for _ in test:
