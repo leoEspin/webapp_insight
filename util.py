@@ -23,7 +23,7 @@ def parsero(string,scale=True):
           'food:cholesterolPer100g','food:transFatPer100g',
           'food:saturatedFatPer100g','food:sodiumEquivalentPer100g']
     tmp=string.split(',')
-    #tmp=list(map(str.strip,tmp))
+    tmp=list(map(str.strip,tmp))
     df=pd.DataFrame(columns=[ _[5:] for _ in keys])
     title=[]
     for i,cbar in enumerate(tmp):
@@ -31,7 +31,7 @@ def parsero(string,scale=True):
         page = requests.get(furl, headers=headers)
         soup=BeautifulSoup(page.content, 'html.parser')
         title.append(soup.title.string.split('-')[0].strip())
-        if title[-1] == 'Add a product':
+        if (title[-1] == 'Add a product') or (title[-1] == 'Error'):
             title.append('Product not foud')
         test=soup.find_all('td', class_="nutriment_value")  
         table={}
