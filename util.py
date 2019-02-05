@@ -151,14 +151,22 @@ def decorations(nutList,tagList):
     '''
     color decorators for html nutrition table
     '''
-    tagB={0:'<font color=#ff6347>',1:'<font color="red">',
-      2:'<font color="red">',3:'<font color="red">',
-      4:'<font color="red">',5:'<font color="red">',
-      6:'<font color="red">',7:'<font color="red">',
-      8:'<font color="red">',9:'<font color="red">',
-      10:'<font color=#ff6347>',11:'<font color=#ff6347>',
-      12:'<font color="green">',13:'<font color="green">',
-      14:'<font color=#ff6347>',15:'<font color="green">'}
+    tagB={0:'<span style="background-color: #f6f959">',
+        1:'<span style="background-color: #ff6347">',
+        2:'<span style="background-color: #ff6347">',
+        3:'<span style="background-color: #ff6347">',
+        4:'<span style="background-color: #ff6347">',
+        5:'<span style="background-color: #ff6347">',
+        6:'<span style="background-color: #ff6347">',
+        7:'<span style="background-color: #ff6347">',
+        8:'<span style="background-color: #ff6347">', #red
+        9:'<span style="background-color: #ff6347">',
+        10:'<span style="background-color: #f6f959">',
+        11:'<span style="background-color: #f6f959">',
+        12:'<span style="background-color: #6bff74">',#green
+        13:'<span style="background-color: #6bff74">',
+        14:'<span style="background-color: #f6f959">',
+        15:'<span style="background-color: #6bff74">'}
     for k in range(len(nutList)):#each row corresponds to a barcode
         for i in tagList[k]:#each list in tagList corresponds to each row
-            nutList.iloc[k,i]=tagB[i]+nutList.iloc[k,i]+"</font>"
+            nutList.iloc[k,i]=tagB[i]+nutList.iloc[k,i]+"</span>"
