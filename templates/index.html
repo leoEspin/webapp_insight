@@ -32,15 +32,30 @@
 
 <form action="{{ url_for('calculate') }}" method="GET" role="form">
 <div class="text-left form-group">
-<!--<label class="h5" for="statement1"><em>Portion size</em>, protein, total fat, carbohydrates, calories, sugars, fiber, cholesterol, trans fats, saturated fat, sodium--><br/><br/>
-<span class="lead">Examples </br>Digestive biscuits: 059290311419</br>
+<!--<label class="h5" for="statement1"><em>Portion size</em>, protein, total fat, carbohydrates, calories, sugars, fiber, cholesterol, trans fats, saturated fat, sodium<br/><br/>-->
+<span >
+<b>Examples</b> </br>Digestive biscuits: 059290311419</br>
 Guacamole: 767119578393</br>
 Raw almonds: 0011110724168</br>
 (Cereals) Mini Trix, Cheerios and Froot Loops:
 </span>
-<textarea rows="2" class="form-control" name="statement1" id="statement1" >0016000275324,0016000275263,038000219740</textarea></div>
-<hr class="my-4">
-
+<textarea rows="2" class="form-control" name="barcodes" id="barcodes" >0016000275324,0016000275263,038000219740</textarea></div>
+<!--<hr class="my-4">-->
+<!--<h4 class="mb-2 card-title">What nutrient do you care about the most?</h4>-->
+      <form action="{{ url_for('calculate') }}" method="GET" role="form">
+      <label class="mt-4" for="nutrient">What nutrient do you care about the most?</label>
+        <select class="form-control custom-select" name="nutrient" id="nutrient">
+          <option value="energy">Calories</option>
+          <option value="carbohydrates" >Carbohydrates</option>
+          <option value="cholesterol">Cholesterol</option>
+          <option value="fiber">Fiber</option>
+          <option value="proteins">Protein</option>
+          <option value="saturatedFat">Saturated fats</option>
+          <option value="sodiumEquivalent">Salt</option>
+          <option selected value="sugars">Sugar</option>
+          <option value="fat">Total fats</option>
+          <option value="transFat">Trans fats</option>    
+      </select>            
 <button type="submit" class="mt-3 mb-1 btn btn-success">Rate food</button></form>
               </div>
             </div>

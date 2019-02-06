@@ -18,9 +18,11 @@ def index():
 @app.route('/calculate', methods=['GET'])
 def calculate():
    if request.method == 'GET':
-      codes=request.args.get('statement1')
-      nutritionVect=parsero(codes,True)[0]#rescaled for distance computations
-      contents,title=parsero(codes,False) #rescaled for 100g/html table
+      codes=request.args.get('barcodes')
+      lookFor=request.args.get('nutrient')
+      lookFor=adjectives(lookFor) #qualify nutrient
+      nutritionVect=parsero(codes,'',True)[0]#rescaled for distance computations
+      contents,title,best=parsero(codes,lookFor,False) #rescaled for 100g/html table
       #distances from centroids
       distances=np.zeros((len(contents),len(centroids)))
       for i in range(len(contents)):
@@ -29,10 +31,17 @@ def calculate():
       neighbors,nClust=classifierInt(distances)
       nutList=nutritionList(contents) #nutrition strings for html table
       decorations(nutList,cluster2table(neighbors))#color warning decorations
+      
+      if len(title)>1:
+          best=title[best]
+      else:
+          best='' #not going to be used anyway
+      lookFor=adjectives(lookFor,True) #convert output string for html  
    return render_template('calculate.html.j2',
                           nutrients=nutList,
-                          clusters=nClust,names=title)
+                          clusters=nClust,names=title,lookFor=lookFor,
+                          span=len(title),best=best)
    
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=False)
-    #app.run(debug=True)
+    #app.run(host='0.0.0.0',debug=False)
+    app.run(debug=True)

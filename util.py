@@ -10,12 +10,13 @@ stds = np.genfromtxt('stds.out',delimiter=',')
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0'}
 url='https://world.openfoodfacts.org/product/'
 
-def parsero(string,scale=True):
+def parsero(string,target='',scale=True):
     '''
     Searches product barcode (string argument) at openfoodfacts.org.
-    Parses search results and returns rescaled nutrition vector with 
-    respect to 100 grams portion.
+    Parses search results and returns rescaled nutrition vector (or 
+    dataframe if multiple barcodes) with respect to 100 grams portion.
     Returs also the name of the product
+    target is the nutrient which is targeted for optimization
     '''
     keys=['food:proteinsPer100g','food:fatPer100g',
           'food:carbohydratesPer100g','food:energyPer100g',
@@ -53,7 +54,15 @@ def parsero(string,scale=True):
         if scale:
             x=(x-means)/stds #rescale x for computing distances
         df.loc[i]=x.reshape(10,)
-    return df,title
+    if target: #target not empty
+        opt=target.split()[0]
+        if opt=='most':
+            best=df[target.split()[1]+'Per100g'].idxmax()
+        else:
+            best=df[target.split()[1]+'Per100g'].idxmin()
+    else:
+        best=np.nan
+    return df,title,best
 
 def distance(c,x):
     return np.linalg.norm(x - c)
@@ -170,3 +179,29 @@ def decorations(nutList,tagList):
     for k in range(len(nutList)):#each row corresponds to a barcode
         for i in tagList[k]:#each list in tagList corresponds to each row
             nutList.iloc[k,i]=tagB[i]+nutList.iloc[k,i]+"</span>"
+
+def adjectives(string,convert=False):
+    '''
+    adds an adjective before string, choosing between good or bad. 
+    The values for good and bad list have to match the values returned
+    from the variable "lookFor" which is entered through index.html.
+    '''
+    good=["fiber","proteins",'protein']
+    output={"fiber":"fiber","proteins":'protein',"energy":'calories',
+            "carbohydrates":"carbs","cholesterol":"cholesterol",
+            "saturatedFat":"sat. fat","sodiumEquivalent":"salt",
+         "sugars":"sugar","fat":"total fat","transFat":"trans. fat"}
+    if convert:
+        string=output[string.split()[1]]
+    if string in good:
+        string='most '+string
+    else:
+        string='least '+string
+    return string
+    
+def simply_the_best(nutrient):
+    '''
+    find which of the products has the optimal value given 
+    the nutrient constraint.
+    '''
+    
