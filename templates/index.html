@@ -4,31 +4,28 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- <link href="../static/cover.css" rel="stylesheet"> -->
     
     {% include 'analytics.html' %}
     <title>Food label analysis</title>
+<style>
+ img {
+    max-width: 85%;
+    max-height: 85%;
+}   
+</style>
   </head>
   <body>
     <!-- Page Content -->
     <div class="text-dark container col-9">
-      <!-- Jumbotron Header -->
-        <header class="jumbotron jumbotron-fluid my-0 p-4">
-        <h2 class="strong" align="center">Enter the barcode(s) of your product(s)<br /></h2><hr class="my-4">
-        </header>
-      <!-- Page Features -->
-      {% if error %}
-      <div class="p-3 mb-2 bg-danger text-white">{{error}}</div>
-      {% endif %}
+    <img src="static/logo.png" alt="SmartFoodChoice">
       <div class="mt-5 row text-center">
         <div class="mx-auto">
           <div class="bg-light text-dark card mx-auto">
             <div class="card-body">
-              <h4 class="mb-3 card-title">Separate the barcodes with commas:</h4>
+              <h4 class="mb-3 card-title">Enter the barcode(s) of your product(s)</br>
+              Separate the barcodes with commas</h4>
 
 <form action="{{ url_for('calculate') }}" method="GET" role="form">
 <div class="text-left form-group">

@@ -36,7 +36,7 @@ def parsero(string,target='',scale=True):
             (title[-1] == 'Search results') or
             (title[-1] == 'Error')):
             del title[-1]
-            title.append('<font color="red">Product not foud</font>')
+            title.append('<font color="red">Product not found</font>')
         test=soup.find_all('td', class_="nutriment_value")  
         table={}
         for _ in test:
