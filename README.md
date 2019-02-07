@@ -1,2 +1,2 @@
 # webapp_insight
-Insight webapp
+![alt text](static/logo.png "www.smartfoodchoice.info")
