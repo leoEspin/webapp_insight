@@ -3,11 +3,11 @@
 {% block title %} Classification results {% endblock %}
 
 {% block body %}
-<h1>Most relevant nutrient contents for each product have been highlighted, serving size(s) are standard</h1>
+<h5>Most relevant nutrient contents for each product have been highlighted, serving size(s) are standard</h5>
 <table style="width:100%">
 {% if names|length > 1 %}
   <tr>
-    <td align="center" colspan="{{span}}"><h5>The option with the <font color=#3053f2>{{lookFor}}</font> is <font color=#3053f2>{{best}}</font></h5></td>
+    <td align="center" colspan="{{span}}"><h3>The option with the <font color=#3053f2>{{lookFor}}</font> is <font color=#3053f2>{{best}}</font></h3></td>
   </tr>
 {% endif %}
   
