@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+import os
+from pyzbar.pyzbar import decode
+from PIL import Image
 
 centroids = np.genfromtxt('centroids.out',delimiter=',')
 means = np.genfromtxt('means.out',delimiter=',')
@@ -15,8 +18,8 @@ def parsero(string,target='',scale=True):
     Searches product barcode (string argument) at openfoodfacts.org.
     Parses search results and returns rescaled nutrition vector (or 
     dataframe if multiple barcodes) with respect to 100 grams portion.
-    Returs also the name of the product
-    target is the nutrient which is targeted for optimization
+    Returns also the name of the product.
+    Target is the nutrient which is targeted for optimization
     '''
     keys=['food:proteinsPer100g','food:fatPer100g',
           'food:carbohydratesPer100g','food:energyPer100g',
@@ -24,7 +27,8 @@ def parsero(string,target='',scale=True):
           'food:cholesterolPer100g','food:transFatPer100g',
           'food:saturatedFatPer100g','food:sodiumEquivalentPer100g']
     tmp=string.split(',')
-    #tmp=list(map(str.strip,tmp))
+    tmp=[x.strip() for x in tmp]
+    #tmp=list(map(str.strip,tmp)) #gave unicode vs string error
     df=pd.DataFrame(columns=[ _[5:] for _ in keys])
     title=[]
     for i,cbar in enumerate(tmp):
@@ -199,9 +203,74 @@ def adjectives(string,convert=False):
         string='least '+string
     return string
     
-def simply_the_best(nutrient):
+def parsero2(string,target='',scale=True):
     '''
-    find which of the products has the optimal value given 
-    the nutrient constraint.
+    Searches product barcode (string argument) at openfoodfacts.org.
+    Parses search results and returns rescaled nutrition vector (or 
+    dataframe if multiple barcodes) with respect to 100 grams portion.
+    Returns also the name of the product.
+    Target is the nutrient which is targeted for optimization
     '''
-    
+    keys=['food:proteinsPer100g','food:fatPer100g',
+          'food:carbohydratesPer100g','food:energyPer100g',
+          'food:sugarsPer100g','food:fiberPer100g',
+          'food:cholesterolPer100g','food:transFatPer100g',
+          'food:saturatedFatPer100g','food:sodiumEquivalentPer100g']
+    df=pd.DataFrame(columns=[ _[5:] for _ in keys])
+    title=[]
+    for i,cbar in enumerate(string):
+        furl=url+cbar
+        page = requests.get(furl, headers=headers)
+        soup=BeautifulSoup(page.content, 'html.parser')
+        title.append(soup.title.string.split('-')[0].strip())
+        if ((title[-1] == 'Add a product') or 
+            (title[-1] == 'Search results') or
+            (title[-1] == 'Error')):
+            del title[-1]
+            title.append('<font color="red">Product not found</font>')
+        test=soup.find_all('td', class_="nutriment_value")  
+        table={}
+        for _ in test:
+            if 'content' in _.attrs:
+                table[_.attrs['property']]=float(_.attrs['content']) 
+        values=[]
+        for _ in keys:
+            if _ in table:
+                values.append(table[_])
+            else:
+                values.append(0)
+        values[3]=values[3]/4.184 #converting kJoule into kcal
+        #portion=float(tmp[0])
+        x=np.asarray(values).reshape(1,10)
+        if scale:
+            x=(x-means)/stds #rescale x for computing distances
+        df.loc[i]=x.reshape(10,)
+    if target: #target not empty
+        opt=target.split()[0]
+        if opt=='most':
+            best=df[target.split()[1]+'Per100g'].idxmax()
+        else:
+            best=df[target.split()[1]+'Per100g'].idxmin()
+    else:
+        best=np.nan
+    return df,title,best
+
+def findBarcodes(image,threshold=128):
+    '''
+    It tries to find a barcode in an image. It no barcode is found it converts
+    the image to black/white using a simple threshold method and repeats the
+    scan. It either returns a barcode or None if none was found
+    '''
+    decList=decode(image)
+    if not decList: #decoding returned empty list
+        image=image.convert('L') # convert image to monochrome
+        bw = image.point(lambda x: 0 if x<threshold else 255, '1')#make image bw
+        decList=decode(bw)
+    #select decoded items which are not qr codes
+    tmp=[item.data for item in decList if item.type !='QRCODE']
+    if len(tmp)>0:
+        tmp=tmp[0] #assuming only one barcode present per image
+        tmp=tmp.decode("utf-8")#this is a string :)
+        return tmp
+    else:#tmp might be empty if no barcodes were found in image
+        return None
