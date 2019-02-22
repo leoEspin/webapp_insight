@@ -17,7 +17,7 @@ app.config.update(
     DROPZONE_REDIRECT_VIEW= 'calculate2',
     DROPZONE_MAX_FILE_SIZE=4,#4 MB image
     DROPZONE_MAX_FILES=5,
-    DROPZONE_DEFAULT_MESSAGE='Drop <b>barcode images</b> here or click to upload.</br>(Unrelated images will be ignored)',
+    DROPZONE_DEFAULT_MESSAGE='Drop <b>barcode images</b> here or click to upload (1 MB or less).</br>(Unrelated images will be ignored)',
     #DROPZONE_UPLOAD_ON_CLICK=True,
     #DROPZONE_UPLOAD_ACTION='calculate2',  # URL or endpoint
     #DROPZONE_UPLOAD_BTN_ID='submit',
@@ -129,5 +129,5 @@ def calculate2():
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=False)
-    #app.run(debug=True)
+    #app.run(host='0.0.0.0',debug=False)
+    app.run(debug=True)
