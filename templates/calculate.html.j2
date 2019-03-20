@@ -4,13 +4,7 @@
 
 {% block body %}
 <h5>Most relevant nutrient contents for each product have been highlighted, serving size(s) are standard</h5>
-<table style="width:100%">
-<!--{% if names|length > 1 %}
-  <tr>
-    <td align="center" colspan="{{span}}"><h3>The option with the <font color=#3053f2>{{lookFor}}</font> is <font color=#3053f2>{{best}}</font></h3></td>
-  </tr>
-{% endif %}-->
-  
+<table style="width:100%"> 
   <tr>
     {% for i in names %}
         <td align="center"><h5>{{i}}</h5></td>
@@ -21,10 +15,10 @@
         <td>{% include './nfactsTable.html' %}</td>
     {% endfor %}
   </tr>
-  <!--<tr>
-    {% for i in clusters %}
-        <td><h5>Found <span class="text-success">{{i}}</span> close clusters</h5></td>
-    {% endfor %}
-  </tr>-->
+{% if (names|length > 0) and (names[0] !='<font color="red">Product not found</font>') %}
+  <tr>
+  <td align="center" colspan="{{span}}"><h5>Color meaning: <span style="background-color: #6bff74">considered healty</span>, <span style="background-color: #f6f959">pay attention!</span>, <span style="background-color: #ff6347">considered unhealthy</span></h5></td>
+  </tr>
+{% endif %}  
 </table>
 {% endblock %}
