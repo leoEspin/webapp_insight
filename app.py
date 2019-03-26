@@ -17,7 +17,7 @@ app.config.update(
     DROPZONE_REDIRECT_VIEW= 'calculate2',
     DROPZONE_MAX_FILE_SIZE=5,#5 MB image
     DROPZONE_MAX_FILES=5,
-    DROPZONE_DEFAULT_MESSAGE='Drop <b>barcode images</b> here or click to upload.</br> (1 MB or less, unrelated images will be ignored)',
+    DROPZONE_DEFAULT_MESSAGE='Drop <b>barcode photos</b> here or click to upload.</br> (1 MB or less, unrelated images will be ignored)',
     #DROPZONE_UPLOAD_ON_CLICK=True,
     #DROPZONE_UPLOAD_ACTION='calculate2',  # URL or endpoint
     #DROPZONE_UPLOAD_BTN_ID='submit',
