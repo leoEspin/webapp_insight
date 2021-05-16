@@ -9,7 +9,7 @@ enum34==1.1.6
 Flask==1.0.2
 Flask-Dropzone==1.5.3
 Flask-Uploads==0.2.1
-google-compute-engine==2.8.4
+#google-compute-engine==2.8.4
 gunicorn==19.9.0
 itsdangerous==1.1.0
 Jinja2==2.10
