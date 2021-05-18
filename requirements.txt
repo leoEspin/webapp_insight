@@ -2,7 +2,7 @@ backports.functools-lru-cache==1.5
 beautifulsoup4==4.7.1
 boto==2.38.0
 bs4==0.0.1
-chardet==2.3.0
+chardet #==2.3.0
 Click==7.0
 crcmod==1.7
 enum34==1.1.6
@@ -12,17 +12,17 @@ Flask-Uploads==0.2.1
 #google-compute-engine==2.8.4
 gunicorn==19.9.0
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 MarkupSafe==1.1.0
 numpy==1.16.1
 pandas==0.24.1
 pathlib==1.0.1
-Pillow==5.4.1
+Pillow==8.1.1
 python-dateutil==2.7.5
 pytz==2018.9
 pyzbar==0.1.8
-requests==2.9.1
+requests==2.20.0
 six==1.12.0
 soupsieve==1.7.3
-urllib3==1.13.1
-Werkzeug==0.14.1
+urllib3==1.24.2
+Werkzeug==0.15.3
