@@ -13,4 +13,6 @@ and then instantiating a container with
 
 `docker run --rm -p 5000:5000 smartfoodchoice`
 
-Navigate to `http://0.0.0.0:5000/` to see the webapp in action.
+Navigate to `http://0.0.0.0:5000/` to see the webapp in action:
+
+![](static/Foodlabelanalysis.png "webapp")
