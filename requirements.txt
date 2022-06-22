@@ -14,7 +14,7 @@ gunicorn==19.9.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.0
-numpy==1.21.0
+numpy==1.22.0
 pandas==0.24.1
 pathlib==1.0.1
 Pillow==9.0.1
