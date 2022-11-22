@@ -17,7 +17,7 @@ MarkupSafe==1.1.0
 numpy==1.22.0
 pandas==0.24.1
 pathlib==1.0.1
-Pillow==9.0.1
+Pillow==9.3.0
 python-dateutil==2.7.5
 pytz==2018.9
 pyzbar==0.1.8
