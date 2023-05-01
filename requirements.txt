@@ -6,7 +6,7 @@ chardet #==2.3.0
 Click==7.0
 crcmod==1.7
 enum34==1.1.6
-Flask==1.0.2
+Flask==2.3.2
 Flask-Dropzone==1.5.3
 Flask-Uploads==0.2.1
 #google-compute-engine==2.8.4
